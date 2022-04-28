@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "lint": "next lint",
+    "eslint": "npx eslint \"**/*.{js,jsx}\"",
+    "lint:css": "stylelint './src/**/*.{js,jsx}'",
     "htmlhint": "npx htmlhint '**/*.html'",
     "prettier:check": "npx prettier --check .",
     "prettier:write": "npx prettier --write .",

@@ -1,3 +1,11 @@
 {
-  "extends": ["next", "next/core-web-vitals"]
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:react/jsx-runtime", "next", "next/core-web-vitals"],
+  "rules": {
+    "react/prop-types": 1
+  }
 }
