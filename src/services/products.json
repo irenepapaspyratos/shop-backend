@@ -1,0 +1,58 @@
+[
+  {
+    "id": "626a48a8916f633a190f0251",
+    "name": "Garnele",
+    "description": "Lebt bevorzugt paarweise",
+    "tags": ["paarweise", "gesellig"],
+    "price": 19,
+    "category": "626a485c916f633a190f024c"
+  },
+  {
+    "id": "626a48ef916f633a190f0255",
+    "name": "Anemonenfisch",
+    "description": "Nemo",
+    "tags": ["gesellig", "highlight"],
+    "price": 65,
+    "category": "626a47d8916f633a190f0246"
+  },
+  {
+    "id": "626a4929916f633a190f0258",
+    "name": "Pracht-Anemone",
+    "description": "Ist prächtig",
+    "tags": ["prächtig", "reflektierend"],
+    "price": 90,
+    "category": "626a4835916f633a190f024a"
+  },
+  {
+    "id": "626a494c916f633a190f025b",
+    "name": "Mördermuschel",
+    "description": "Ist hübscher als ihr Name",
+    "tags": ["schillernd"],
+    "price": 125,
+    "category": "626a4811916f633a190f0248"
+  },
+  {
+    "id": "626a49ce916f633a190f025f",
+    "name": "Kaiserfisch",
+    "description": "Ein tagaktiver Einzelgänger",
+    "tags": ["Einzelgänger"],
+    "price": 90,
+    "category": "626a47d8916f633a190f0246"
+  },
+  {
+    "id": "626a49f6916f633a190f0262",
+    "name": "Guppy",
+    "description": "Klein aber fein",
+    "tags": ["Mengenrabatt"],
+    "price": 5,
+    "category": "626a46ea916f633a190f0244"
+  },
+  {
+    "id": "626a4a1e916f633a190f0266",
+    "name": "Regenbogenfisch",
+    "description": "In allen Farben",
+    "tags": ["gesellig", "rot", "grün", "blau"],
+    "price": 12,
+    "category": "626a46ea916f633a190f0244"
+  }
+]
