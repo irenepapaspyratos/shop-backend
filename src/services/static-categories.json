@@ -1,0 +1,27 @@
+[
+    {
+        "id": "626a46ea916f633a190f0244",
+        "name": "Süßwasser",
+        "description": "Bewohner von Binnengewässern"
+    },
+    {
+        "id": "626a47d8916f633a190f0246",
+        "name": "Meerwasser",
+        "description": "Fühlen sich in Salzwasser wohl"
+    },
+    {
+        "id": "626a4811916f633a190f0248",
+        "name": "Muscheln",
+        "description": "Harte Schale, weicher Kern"
+    },
+    {
+        "id": "626a4835916f633a190f024a",
+        "name": "Korallen und Blumentiere",
+        "description": "Sehen hübsch aus"
+    },
+    {
+        "id": "626a485c916f633a190f024c",
+        "name": "Wirbellose",
+        "description": "Seesterne und Krebstiere"
+    }
+]
