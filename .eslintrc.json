@@ -4,7 +4,7 @@
     "es2021": true,
     "node": true
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:react/jsx-runtime", "next", "next/core-web-vitals"],
+  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:react/jsx-runtime", "next", "next/core-web-vitals", "plugin:storybook/recommended"],
   "rules": {
     "react/prop-types": 1
   }
