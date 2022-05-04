@@ -3,7 +3,7 @@ import getProducts from '../src/services/get-products';
 //import getProducts from "../src/services/get-data";
 import ProductList from '../src/components/ProductList';
 import { SWRConfig } from 'swr';
-import { swrFetcher } from '../src/lib/swr-fetcher';
+import swrFetcher from '../src/lib/swr-fetcher';
 
 export async function getStaticProps() {
     const products = await getProducts();
@@ -28,4 +28,5 @@ export default function Products({ fallback }) {
 
 Products.propTypes = {
     products: PropTypes.any,
+    fallback: PropTypes.any,
 };
