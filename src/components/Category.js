@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { mutate, useSWRConfig } from 'swr';
 import { useRouter } from 'next/router';
+import Product from '../models/Product';
 
-export default function Product(props) {
+export default function Category(props) {
     const [isEditMode, setIsEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(false);
 
     function enableEditMode() {
         setIsEditMode(true);
@@ -14,35 +16,40 @@ export default function Product(props) {
         setDeleteMode(!isDeleteMode);
     }
 
+    function putDisable() {
+        console.log('hallo-----------------------------------------------');
+        //let product = await Product.findOne({})
+        setIsDisabled(!isDisabled);
+    }
+
     return (
         <div>
             {isDeleteMode ? (
-                <ProductModeConfirmation
+                <CategoryModeConfirmation
                     {...props}
                     onDisableDeleteMode={enableDeleteMode}
+                    isDisabled={isDisabled}
                 />
             ) : (
-                <ProductModeShow
+                <CategoryModeShow
                     {...props}
                     onEnableEditMode={enableEditMode}
-                    isDeleteMode={isDeleteMode}
+                    isDisabled={isDisabled}
                     onDisableDeleteMode={enableDeleteMode}
+                    onPutDisable={putDisable}
                 />
             )}
         </div>
     );
 }
 
-function ProductModeShow({
+function CategoryModeShow({
     id,
     name,
     description,
-    tags,
-    price,
-    category,
-    onEnableEditMode,
     onDisableDeleteMode,
-    isDeleteMode,
+    isDisabled,
+    onPutDisable,
 }) {
     const router = useRouter();
 
@@ -50,27 +57,16 @@ function ProductModeShow({
         <div>
             <div>
                 <h5>{name}</h5>
-                <h5>{price}</h5>
+                <h5>{description}</h5>
             </div>
-            <div>
-                <p>{description}</p>
-                <p>{category}</p>
-            </div>
-            <ul>
-                {tags.map((tag, index) => {
-                    return (
-                        <div key={index}>
-                            <li>{tag}</li>
-                        </div>
-                    );
-                })}
-            </ul>
+
             <div>
                 <button
                     size="small"
                     onClick={() => {
+                        onPutDisable();
+
                         onDisableDeleteMode();
-                        console.log(isDeleteMode);
                     }}
                 >
                     Delete
@@ -78,14 +74,10 @@ function ProductModeShow({
                 <button
                     onClick={() => {
                         router.push({
-                            pathname: '/edit-product',
+                            pathname: '/edit-category',
                             query: {
-                                id: id,
                                 nameValue: name,
                                 descriptionValue: description,
-                                priceValue: price,
-                                tagsValue: tags,
-                                categoryValue: category,
                             },
                         });
                     }}
@@ -97,46 +89,34 @@ function ProductModeShow({
     );
 }
 
-function ProductModeConfirmation({
+function CategoryModeConfirmation({
     id,
     name,
     description,
-    tags,
-    price,
-    category,
     onDisableDeleteMode,
+    isDisabled,
 }) {
     const { mutate } = useSWRConfig();
+    console.log(id);
 
     return (
         <div>
             <div>
                 <h5>{name}</h5>
-                <h5>{price}</h5>
+                <h5>{description}</h5>
             </div>
-            <div>
-                <p>{description}</p>
-                <p>{category}</p>
-            </div>
-            <ul>
-                {tags.map((tag, index) => {
-                    return (
-                        <div key={index}>
-                            <li>{tag}</li>
-                        </div>
-                    );
-                })}
-            </ul>
+
             <div>
                 <button
+                    disabled={isDisabled}
                     type="button"
                     size="small"
                     onClick={async () => {
-                        const response = await fetch('/api/product/' + id, {
+                        const response = await fetch('/api/category/' + id, {
                             method: 'DELETE',
                         });
                         console.log(await response.json());
-                        mutate('/api/products');
+                        mutate('/api/categories');
                     }}
                 >
                     Confirm Delete
