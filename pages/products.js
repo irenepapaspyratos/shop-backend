@@ -1,22 +1,28 @@
 import PropTypes from 'prop-types';
-
 import { getStatData } from '../src/services/get-data';
-import DataList from '../src/components/DataList';
+//import getProducts from "../src/services/get-data";
+import ProductList from '../src/components/ProductList';
+import { SWRConfig } from 'swr';
+import { swrFetcher } from '../src/lib/swr-fetcher';
 
 export function getStaticProps() {
     const products = getStatData('products');
 
     return {
-        props: { products },
+        props: {
+            fallback: {
+                '/api/products': products,
+            },
+        },
     };
 }
 
-export default function Products({ products }) {
+export default function Products({ fallback }) {
     return (
-        <>
-            <h1>Products</h1>
-            <DataList listData={products} />
-        </>
+        <SWRConfig value={{ fetcher: swrFetcher, fallback }}>
+            <h1>Produkte</h1>
+            <ProductList />
+        </SWRConfig>
     );
 }
 
