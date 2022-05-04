@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 
-import { getStatData } from '../src/services/get-data';
+import getCategories from '../src/services/get-categories';
 import DataList from '../src/components/DataList';
 
 export function getStaticProps() {
-    const categories = getStatData('categories');
+    const categories = getCategories();
 
     return {
         props: { categories },

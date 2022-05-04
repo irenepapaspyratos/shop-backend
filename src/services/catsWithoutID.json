@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Süßwasser",
+        "description": "Bewohner von Binnengewässern"
+    },
+    {
+        "name": "Meerwasser",
+        "description": "Fühlen sich in Salzwasser wohl"
+    },
+    {
+        "name": "Muscheln",
+        "description": "Harte Schale, weicher Kern"
+    },
+    {
+        "name": "Korallen und Blumentiere",
+        "description": "Sehen hübsch aus"
+    },
+    {
+        "name": "Wirbellose",
+        "description": "Seesterne und Krebstiere"
+    }
+]
