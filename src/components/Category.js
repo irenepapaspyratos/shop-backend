@@ -63,8 +63,6 @@ function CategoryModeShow({
                 <button
                     size="small"
                     onClick={() => {
-                        onPutDisable();
-
                         onDisableDeleteMode();
                     }}
                 >

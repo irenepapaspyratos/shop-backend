@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import getProducts from '../src/services/get-products';
-//import getProducts from "../src/services/get-data";
 import ProductList from '../src/components/ProductList';
 import { SWRConfig } from 'swr';
 import swrFetcher from '../src/lib/swr-fetcher';
