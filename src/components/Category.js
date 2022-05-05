@@ -17,7 +17,6 @@ export default function Category(props) {
     }
 
     function putDisable() {
-        console.log('hallo-----------------------------------------------');
         //let product = await Product.findOne({})
         setIsDisabled(!isDisabled);
     }
@@ -76,6 +75,7 @@ function CategoryModeShow({
                         router.push({
                             pathname: '/edit-category',
                             query: {
+                                id: id,
                                 nameValue: name,
                                 descriptionValue: description,
                             },
@@ -110,7 +110,6 @@ function CategoryModeConfirmation({
                 <button
                     disabled={isDisabled}
                     type="button"
-                    size="small"
                     onClick={async () => {
                         const response = await fetch('/api/category/' + id, {
                             method: 'DELETE',
