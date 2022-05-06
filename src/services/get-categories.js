@@ -5,9 +5,11 @@ export default async function getCategories() {
     await dbConnect();
 
     const categories = await Category.find();
-    return categories.map(({ id, description, name }) => ({
+    console.log('get-Categories: ', categories);
+
+    return categories.map(({ id, name, description }) => ({
         id,
-        description,
         name,
+        description,
     }));
 }

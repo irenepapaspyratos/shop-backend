@@ -9,6 +9,6 @@ const productSchema = new mongoose.Schema({
     category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
 });
 const Product =
-    mongoose.models.Product ?? mongoose.model('Product', productSchema);
+    mongoose.models?.Product ?? mongoose.model('Product', productSchema);
 
 export default Product;

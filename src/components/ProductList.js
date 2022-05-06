@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import Product from './Product';
 
-export default function ProductGrid() {
+export default function ProductList() {
     const { data, error } = useSWR('/api/products');
 
     if (error) {
