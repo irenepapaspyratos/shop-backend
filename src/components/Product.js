@@ -1,14 +1,9 @@
 import { useState } from 'react';
-import { mutate, useSWRConfig } from 'swr';
+import { useSWRConfig } from 'swr';
 import { useRouter } from 'next/router';
 
 export default function Product(props) {
-    const [isEditMode, setIsEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
-
-    function enableEditMode() {
-        setIsEditMode(true);
-    }
 
     function enableDeleteMode() {
         setDeleteMode(!isDeleteMode);
@@ -24,7 +19,6 @@ export default function Product(props) {
             ) : (
                 <ProductModeShow
                     {...props}
-                    onEnableEditMode={enableEditMode}
                     isDeleteMode={isDeleteMode}
                     onDisableDeleteMode={enableDeleteMode}
                 />
@@ -40,7 +34,6 @@ function ProductModeShow({
     tags,
     price,
     category,
-    onEnableEditMode,
     onDisableDeleteMode,
     isDeleteMode,
 }) {
@@ -70,7 +63,6 @@ function ProductModeShow({
                     size="small"
                     onClick={() => {
                         onDisableDeleteMode();
-                        console.log(isDeleteMode);
                     }}
                 >
                     Delete
@@ -80,7 +72,7 @@ function ProductModeShow({
                         router.push({
                             pathname: '/edit-product',
                             query: {
-                                id: id,
+                                idValue: id,
                                 nameValue: name,
                                 descriptionValue: description,
                                 priceValue: price,
@@ -130,7 +122,6 @@ function ProductModeConfirmation({
             <div>
                 <button
                     type="button"
-                    size="small"
                     onClick={async () => {
                         const response = await fetch('/api/product/' + id, {
                             method: 'DELETE',

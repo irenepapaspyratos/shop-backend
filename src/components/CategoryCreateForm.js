@@ -1,5 +1,6 @@
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useState } from 'react';
+import React from 'react';
 
 const initialState = {
     descriptionValue: '',
@@ -8,21 +9,47 @@ const initialState = {
 
 export default function CategoryCreateForm() {
     const [categoryInput, setCategoryInput] = useState(initialState);
-
     const router = useRouter();
+
+    React.useEffect(() => {
+        if (router.isReady) {
+            setCategoryInput({
+                ...categoryInput,
+                nameValue: router.query.nameValue,
+                descriptionValue: router.query.descriptionValue,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [router.isReady]);
 
     const submit = async event => {
         event.preventDefault();
 
-        const response = await fetch('/api/category/create', {
-            method: 'POST',
-            body: JSON.stringify({
-                description: categoryInput.descriptionValue,
-                name: categoryInput.nameValue,
-            }),
-        });
+        if (!router.query.idValue) {
+            const response = await fetch('/api/category/create', {
+                method: 'POST',
+                body: JSON.stringify({
+                    description: categoryInput.descriptionValue,
+                    name: categoryInput.nameValue,
+                }),
+            });
 
-        router.push('/categories');
+            router.push('/categories');
+        } else {
+            const response = await fetch(
+                '/api/category/' + router.query.idValue,
+                {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        description: categoryInput.descriptionValue,
+                        name: categoryInput.nameValue,
+                    }),
+                }
+            );
+            console.log(await response.json());
+
+            router.push('/categories');
+        }
     };
 
     return (
@@ -32,7 +59,7 @@ export default function CategoryCreateForm() {
                     Category Name
                     <input
                         required
-                        placeholder="Sea water"
+                        placeholder="eg.: Meerwasser"
                         type="text"
                         name="name"
                         label="name"
@@ -64,6 +91,15 @@ export default function CategoryCreateForm() {
                 </label>
 
                 <button type="submit">Submit</button>
+                <button
+                    type="button"
+                    onClick={event => {
+                        event.preventDefault();
+                        Router.back();
+                    }}
+                >
+                    Cancel
+                </button>
             </form>
         </>
     );

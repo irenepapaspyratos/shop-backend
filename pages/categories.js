@@ -18,16 +18,13 @@ export async function getStaticProps() {
 
 export default function Categories({ fallback }) {
     return (
-        <>
-            <SWRConfig value={{ fetcher: swrFetcher, fallback }}>
-                <h1>Categories</h1>
-                <CategoryList />
-            </SWRConfig>
-        </>
+        <SWRConfig value={{ fetcher: swrFetcher, fallback }}>
+            <h1>Categories</h1>
+            <CategoryList />
+        </SWRConfig>
     );
 }
 
 Categories.propTypes = {
-    categories: PropTypes.array,
-    fallback: PropTypes.any,
+    fallback: PropTypes.object,
 };

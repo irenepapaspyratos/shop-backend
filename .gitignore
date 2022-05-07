@@ -19,6 +19,8 @@
 .DS_Store
 *.pem
 /src/stories
+/src/components/CopyProductCreateForm.js
+/src/components/CopyCategoryCreateForm.js
 
 # debug
 npm-debug.log*

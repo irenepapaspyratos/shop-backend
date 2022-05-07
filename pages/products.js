@@ -26,6 +26,5 @@ export default function Products({ fallback }) {
 }
 
 Products.propTypes = {
-    products: PropTypes.any,
-    fallback: PropTypes.any,
+    fallback: PropTypes.object,
 };

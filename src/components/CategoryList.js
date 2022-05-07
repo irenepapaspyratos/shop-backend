@@ -3,6 +3,7 @@ import Category from './Category';
 
 export default function CategoryList() {
     const { data, error } = useSWR('/api/categories');
+
     if (error) {
         return <h3>Error: {error.message}</h3>;
     }

@@ -1,16 +1,10 @@
 import { useState } from 'react';
-import { mutate, useSWRConfig } from 'swr';
+import { useSWRConfig } from 'swr';
 import { useRouter } from 'next/router';
-import Product from '../models/Product';
 
 export default function Category(props) {
-    const [isEditMode, setIsEditMode] = useState(false);
     const [isDeleteMode, setDeleteMode] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
-
-    function enableEditMode() {
-        setIsEditMode(true);
-    }
 
     function enableDeleteMode() {
         setDeleteMode(!isDeleteMode);
@@ -32,10 +26,10 @@ export default function Category(props) {
             ) : (
                 <CategoryModeShow
                     {...props}
-                    onEnableEditMode={enableEditMode}
-                    isDisabled={isDisabled}
+                    isDeleteMode={isDeleteMode}
                     onDisableDeleteMode={enableDeleteMode}
                     onPutDisable={putDisable}
+                    isDisabled={isDisabled}
                 />
             )}
         </div>
@@ -61,7 +55,7 @@ function CategoryModeShow({
 
             <div>
                 <button
-                    size="small"
+                    disabled={isDisabled}
                     onClick={() => {
                         onDisableDeleteMode();
                     }}
@@ -73,7 +67,7 @@ function CategoryModeShow({
                         router.push({
                             pathname: '/edit-category',
                             query: {
-                                id: id,
+                                idValue: id,
                                 nameValue: name,
                                 descriptionValue: description,
                             },
@@ -92,10 +86,8 @@ function CategoryModeConfirmation({
     name,
     description,
     onDisableDeleteMode,
-    isDisabled,
 }) {
     const { mutate } = useSWRConfig();
-    console.log(id);
 
     return (
         <div>
@@ -103,10 +95,8 @@ function CategoryModeConfirmation({
                 <h5>{name}</h5>
                 <h5>{description}</h5>
             </div>
-
             <div>
                 <button
-                    disabled={isDisabled}
                     type="button"
                     onClick={async () => {
                         const response = await fetch('/api/category/' + id, {
