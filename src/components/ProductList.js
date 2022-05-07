@@ -7,6 +7,7 @@ export default function ProductList() {
     if (error) {
         return <h3>Error: {error.message}</h3>;
     }
+
     return (
         <ul>
             {data.map(product => {

@@ -1,5 +1,6 @@
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useState } from 'react';
+import React from 'react';
 
 const initialState = {
     descriptionValue: '',
@@ -11,24 +12,56 @@ const initialState = {
 
 export default function ProductCreateForm() {
     const [productInput, setProductInput] = useState(initialState);
-
     const router = useRouter();
+
+    React.useEffect(() => {
+        if (router.isReady) {
+            setProductInput({
+                ...productInput,
+                nameValue: router.query.nameValue,
+                priceValue: router.query.priceValue,
+                categoryValue: router.query.categoryValue,
+                tagsValue: router.query.tagsValue,
+                descriptionValue: router.query.descriptionValue,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [router.isReady]);
 
     const submit = async event => {
         event.preventDefault();
 
-        const response = await fetch('/api/product/create', {
-            method: 'POST',
-            body: JSON.stringify({
-                description: productInput.descriptionValue,
-                name: productInput.nameValue,
-                price: productInput.priceValue,
-                category: productInput.categoryValue,
-                tags: productInput.tagsValue,
-            }),
-        });
+        if (!router.query.idValue) {
+            const response = await fetch('/api/product/create', {
+                method: 'POST',
+                body: JSON.stringify({
+                    description: productInput.descriptionValue,
+                    name: productInput.nameValue,
+                    price: productInput.priceValue,
+                    category: productInput.categoryValue,
+                    tags: productInput.tagsValue,
+                }),
+            });
 
-        router.push('/products');
+            router.push('/products');
+        } else {
+            const response = await fetch(
+                '/api/product/' + router.query.idValue,
+                {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        description: productInput.descriptionValue,
+                        name: productInput.nameValue,
+                        price: productInput.priceValue,
+                        category: productInput.categoryValue,
+                        tags: productInput.tagsValue,
+                    }),
+                }
+            );
+            console.log(await response.json());
+
+            router.push('/products');
+        }
     };
 
     return (
@@ -38,7 +71,7 @@ export default function ProductCreateForm() {
                     Product Name
                     <input
                         id="name"
-                        placeholder="Codfish"
+                        placeholder="eg.: Codfish"
                         required
                         type="text"
                         name="name"
@@ -57,7 +90,7 @@ export default function ProductCreateForm() {
                     Product Description
                     <input
                         required
-                        placeholder="likes to live as couple"
+                        placeholder="eg.: likes to live as couple"
                         type="text"
                         name="description"
                         label="description"
@@ -75,7 +108,7 @@ export default function ProductCreateForm() {
                     Price p.P.
                     <input
                         required
-                        placeholder="19"
+                        placeholder="eg.: 19"
                         type="text"
                         name="price"
                         label="price"
@@ -97,7 +130,7 @@ export default function ProductCreateForm() {
                     Category ID
                     <input
                         required
-                        placeholder="62736898cdfe5b912b81df35"
+                        placeholder="eg.: 62736898cdfe5b912b81df35"
                         type="text"
                         name="category"
                         label="category"
@@ -115,7 +148,7 @@ export default function ProductCreateForm() {
                     Tags
                     <input
                         required
-                        placeholder="colorful, big, sharp teeth..."
+                        placeholder="eg.: colorful, big, sharp teeth..."
                         type="text"
                         name="tags"
                         label="tags"
@@ -132,6 +165,15 @@ export default function ProductCreateForm() {
                 </label>
 
                 <button type="submit">Submit</button>
+                <button
+                    type="button"
+                    onClick={event => {
+                        event.preventDefault();
+                        Router.back();
+                    }}
+                >
+                    Cancel
+                </button>
             </form>
         </>
     );
