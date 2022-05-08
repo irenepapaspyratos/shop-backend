@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSWRConfig } from 'swr';
 import { useRouter } from 'next/router';
+import Product from '../models/Product';
 
 export default function Category(props) {
     const [isDeleteMode, setDeleteMode] = useState(false);
@@ -10,9 +11,18 @@ export default function Category(props) {
         setDeleteMode(!isDeleteMode);
     }
 
-    function putDisable() {
-        //let product = await Product.findOne({})
-        setIsDisabled(!isDisabled);
+    async function putDisable(catName) {
+        const data = await fetch('/api/products');
+        const products = await data.json();
+        const delBool = await products.find(prod => {
+            return prod.category === catName;
+        });
+        delBool
+            ? alert(
+                  // prettier-ignore
+                  "Related products found! \n\n If I were You, I would NOT delete this category!!!!"
+              )
+            : setIsDisabled(false);
     }
 
     return (
@@ -57,6 +67,7 @@ function CategoryModeShow({
                 <button
                     disabled={isDisabled}
                     onClick={() => {
+                        onPutDisable(name);
                         onDisableDeleteMode();
                     }}
                 >
