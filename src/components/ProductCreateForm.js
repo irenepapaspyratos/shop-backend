@@ -1,4 +1,4 @@
-import Router, { useRouter } from 'next/router';
+import Router, { mutate, useRouter } from 'next/router';
 import { useState } from 'react';
 import React from 'react';
 
@@ -10,7 +10,7 @@ const initialState = {
     categoryValue: '',
 };
 
-export default function ProductCreateForm() {
+export default function ProductCreateForm({ categories: data }) {
     const [productInput, setProductInput] = useState(initialState);
     const router = useRouter();
 
@@ -28,23 +28,34 @@ export default function ProductCreateForm() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [router.isReady]);
 
+    const catNameArray = data.map(cat => cat.name);
+
+    let catId = catName => {
+        return catNameArray.indexOf(catName) > -1
+            ? data[catNameArray.indexOf(catName)].id
+            : false;
+    };
+
     const submit = async event => {
         event.preventDefault();
 
-        if (!router.query.idValue) {
+        if (
+            !router.query.idValue &&
+            catId(productInput.categoryValue) !== false
+        ) {
             const response = await fetch('/api/product/create', {
                 method: 'POST',
                 body: JSON.stringify({
                     description: productInput.descriptionValue,
                     name: productInput.nameValue,
                     price: productInput.priceValue,
-                    category: productInput.categoryValue,
+                    category: catId(productInput.categoryValue),
                     tags: productInput.tagsValue,
                 }),
             });
 
             router.push('/products');
-        } else {
+        } else if (catId(productInput.categoryValue) !== false) {
             const response = await fetch(
                 '/api/product/' + router.query.idValue,
                 {
@@ -53,7 +64,7 @@ export default function ProductCreateForm() {
                         description: productInput.descriptionValue,
                         name: productInput.nameValue,
                         price: productInput.priceValue,
-                        category: productInput.categoryValue,
+                        category: catId(productInput.categoryValue),
                         tags: productInput.tagsValue,
                     }),
                 }
@@ -61,6 +72,10 @@ export default function ProductCreateForm() {
             console.log(await response.json());
 
             router.push('/products');
+        } else {
+            //prettier-ignore
+            alert("No existing category with this name found. \n\n Please choose an existing one or create a new one first.")
+            router.push('/create-product');
         }
     };
 
@@ -130,11 +145,10 @@ export default function ProductCreateForm() {
                     Category ID
                     <input
                         required
-                        placeholder="eg.: 62736898cdfe5b912b81df35"
-                        type="text"
-                        name="category"
-                        label="category"
-                        value={productInput.categoryValue}
+                        placeholder="eg. Meerwasser"
+                        id="categoryList"
+                        list="category"
+                        name="categoryList"
                         onChange={event => {
                             setProductInput({
                                 ...productInput,
@@ -142,6 +156,15 @@ export default function ProductCreateForm() {
                             });
                         }}
                     />
+                    <datalist id="category">
+                        {data.map(category => {
+                            return (
+                                <option key={category.id} value={category.name}>
+                                    {category.name}
+                                </option>
+                            );
+                        })}
+                    </datalist>
                 </label>
 
                 <label>
