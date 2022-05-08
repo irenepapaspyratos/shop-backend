@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useSWRConfig } from 'swr';
 import { useRouter } from 'next/router';
-import Product from '../models/Product';
 
 export default function Category(props) {
     const [isDeleteMode, setDeleteMode] = useState(false);

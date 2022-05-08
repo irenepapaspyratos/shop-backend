@@ -33,7 +33,7 @@ export default function CategoryCreateForm() {
                     name: categoryInput.nameValue,
                 }),
             });
-
+            console.log(response);
             router.push('/categories');
         } else {
             const response = await fetch(

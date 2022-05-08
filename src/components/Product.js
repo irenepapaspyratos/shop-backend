@@ -35,7 +35,6 @@ function ProductModeShow({
     price,
     category,
     onDisableDeleteMode,
-    isDeleteMode,
 }) {
     const router = useRouter();
 
