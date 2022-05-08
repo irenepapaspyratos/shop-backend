@@ -1,4 +1,4 @@
-import Router, { mutate, useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useState } from 'react';
 import React from 'react';
 
@@ -53,7 +53,7 @@ export default function ProductCreateForm({ categories: data }) {
                     tags: productInput.tagsValue,
                 }),
             });
-
+            console.log(response);
             router.push('/products');
         } else if (catId(productInput.categoryValue) !== false) {
             const response = await fetch(

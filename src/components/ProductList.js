@@ -11,6 +11,10 @@ export default function ProductList() {
         return <h3>Error: {errorProducts.message}</h3>;
     }
 
+    if (errorCategories) {
+        return <h3>Error: {errorCategories.message}</h3>;
+    }
+
     function handleSelect(val) {
         setSelectValue(val);
     }
