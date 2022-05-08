@@ -75,7 +75,7 @@ export default function ProductCreateForm({ categories: data }) {
         } else {
             //prettier-ignore
             alert("No existing category with this name found. \n\n Please choose an existing one or create a new one first.")
-            router.push('/create-product');
+            router.push('/edit-product');
         }
     };
 
